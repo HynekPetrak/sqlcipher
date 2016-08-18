@@ -145,7 +145,7 @@ FOR_WIN10 = 0
 # runtime library.
 #
 !IFNDEF NO_TCL
-NO_TCL = 0
+NO_TCL = 1
 !ENDIF
 # <</mark>>
 
@@ -403,6 +403,7 @@ NUCRTLIBPATH = $(NUCRTLIBPATH:\\=\)
 NLTLIBPATHS = $(NLTLIBPATHS) "/LIBPATH:$(NUCRTLIBPATH)"
 !ENDIF
 !ENDIF
+
 
 # C compiler and options for use in building executables that
 # will run on the target platform.  (BCC and TCC are usually the
@@ -683,11 +684,11 @@ TCLLIBDIR = c:\tcl\lib
 !ENDIF
 
 !IFNDEF LIBTCL
-LIBTCL = tcl85.lib
+LIBTCL = tcl86.lib
 !ENDIF
 
 !IFNDEF LIBTCLSTUB
-LIBTCLSTUB = tclstub85.lib
+LIBTCLSTUB = tclstub86.lib
 !ENDIF
 
 !IFNDEF LIBTCLPATH
@@ -755,8 +756,11 @@ TLIBS =
 # default to file, 2 to default to memory, and 3 to force temporary
 # tables to always be in memory.
 #
-TCC = $(TCC) -DSQLITE_TEMP_STORE=1
-RCC = $(RCC) -DSQLITE_TEMP_STORE=1
+TCC = $(TCC) -DSQLITE_TEMP_STORE=2
+RCC = $(RCC) -DSQLITE_TEMP_STORE=2
+
+TCC = $(TCC) -DSQLITE_HAS_CODEC -IC:\Dev\Build-OpenSSL-VC-64\Include
+RCC = $(RCC) -DSQLITE_HAS_CODEC -IC:\Dev\Build-OpenSSL-VC-64\Include
 
 # Enable/disable loadable extensions, and other optional features
 # based on configuration. (-DSQLITE_OMIT*, -DSQLITE_ENABLE*).
@@ -950,6 +954,9 @@ LTLIBPATHS = $(LTLIBPATHS) /LIBPATH:$(ICULIBDIR)
 LTLIBS = $(LTLIBS) $(LIBICU)
 !ENDIF
 # <</mark>>
+
+LTLIBS = $(LTLIBS) libeay32.lib ssleay32.lib user32.lib gdi32.lib advapi32.lib
+LTLIBPATHS = $(LTLIBPATHS) "/LIBPATH:c:\dev\Build-OpenSSL-VC-64\lib"
 
 # You should not have to change anything below this line
 ###############################################################################
